@@ -17,3 +17,16 @@ spec:
           image: jorgelmp/colegio-cdmx:latest
           ports:
             - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: servidor-web-service
+spec:
+  selector:
+    app: servidor-web
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort
