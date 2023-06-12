@@ -11,7 +11,7 @@ pipeline {
 
     stage('Checkout Source') {
       steps {
-        git 'https://github.com/jorgelmp/colegio-cdmx.git'
+        git branch: 'main', url: 'https://github.com/jorgelmp/colegio-cdmx'
       }
     }
 
