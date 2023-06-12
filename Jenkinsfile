@@ -1,4 +1,10 @@
 pipeline {
+  
+  environment {
+    dockerimagename = "jorgelmp/colegio-cdmx"
+    dockerImage = ""
+  }
+
   agent any
 
   stages {
@@ -12,17 +18,19 @@ pipeline {
     stage('Build image') {
       steps{
         script {
-          sh 'docker build -t jorgelmp/colegio-cdmx .'
+          dockerImage = docker.build dockerimagename
         }
       }
     }
 
     stage('Pushing Image') {
+      environment {
+        registryCredential = 'dockerhublogin'
+      }
       steps{
         script {
-          withCredentials([string(credentialsId: 'dockerhub-credentials', variable: 'dockerhubpwd')]) {
-            sh 'docker login -u jorgelmp -p ${dockerhubpwd}'
-            sh 'docker push jorgelmp/colegio-cdmx'
+          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
+            dockerImage.push("latest")
           }
         }
       }
