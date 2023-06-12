@@ -1,4 +1,2 @@
-FROM nginx:latest
-RUN chmod -R 644 /usr/share/nginx/html
-COPY src /usr/share/nginx/html
-COPY . .
+FROM httpd:2.4
+COPY src/ /usr/local/apache2/htdocs/
