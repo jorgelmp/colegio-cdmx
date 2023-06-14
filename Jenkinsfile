@@ -36,8 +36,7 @@ pipeline {
       }
     }
 
-    stage('Deploying React.js container to Kubernetes') {
-      steps {
+    stage('Deploying container to Kubernetes') {
         script {
           //kubernetesDeploy(configs: "servidor-web-deploy-svc.yaml", kubeconfigId: 'kbconfig')
           withKubeConfig([credentialsId: 'kbconfig']) {
@@ -49,10 +48,8 @@ pipeline {
                   kubectl apply -f servidor-web-deploy-svc.yaml
                 fi
             '''
+          }
         }
-      }
     }
-
   }
-
 }
