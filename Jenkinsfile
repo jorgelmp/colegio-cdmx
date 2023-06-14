@@ -37,7 +37,7 @@ pipeline {
     }
 
     stage('Deploying container to Kubernetes') {
-      step{
+      steps{
         script {
           //kubernetesDeploy(configs: "servidor-web-deploy-svc.yaml", kubeconfigId: 'kbconfig')
           withKubeConfig([credentialsId: 'kbconfig']) {
