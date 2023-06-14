@@ -41,12 +41,14 @@ pipeline {
         script {
           //kubernetesDeploy(configs: "servidor-web-deploy-svc.yaml", kubeconfigId: 'kbconfig')
           withKubeCredentials(kubectlCredentials: [[credentialsId: 'kube-credentials',serverUrl: '192.168.124.254']]) {
+            sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
+            sh 'chmod u+x ./kubectl'
             sh '''
-                if kubectl get deployments | grep servidor-web
+                if ./kubectl get deployments | grep servidor-web
                 then
-                  kubectl rollout restart deployment servidor-web
+                  ./kubectl rollout restart deployment servidor-web
                 else
-                  kubectl apply -f servidor-web-deploy-svc.yaml
+                  ./kubectl apply -f servidor-web-deploy-svc.yaml
                 fi
             '''
           }
