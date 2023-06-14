@@ -37,6 +37,7 @@ pipeline {
     }
 
     stage('Deploying container to Kubernetes') {
+      step{
         script {
           //kubernetesDeploy(configs: "servidor-web-deploy-svc.yaml", kubeconfigId: 'kbconfig')
           withKubeConfig([credentialsId: 'kbconfig']) {
@@ -50,6 +51,7 @@ pipeline {
             '''
           }
         }
+      }
     }
   }
 }
