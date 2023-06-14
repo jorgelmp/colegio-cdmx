@@ -40,7 +40,7 @@ pipeline {
       steps{
         script {
           //kubernetesDeploy(configs: "servidor-web-deploy-svc.yaml", kubeconfigId: 'kbconfig')
-          withKubeCredentials(kubectlCredentials: [[credentialsId: 'kube-credentials',serverUrl: '192.168.124.254:443']]) {
+          withKubeCredentials(kubectlCredentials: [[credentialsId: 'kube-credentials',serverUrl: 'https://192.168.124.254:443']]) {
             sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
             sh 'chmod u+x ./kubectl'
             sh '''
