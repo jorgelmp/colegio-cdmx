@@ -13,7 +13,7 @@ spec:
         app: servidor-web
     spec:
       containers:
-        - name: nginx
+        - name: colegio-cdmx-httpd
           image: jorgelmp/colegio-cdmx:latest
           ports:
             - containerPort: 80
