@@ -40,7 +40,7 @@ pipeline {
       steps{
         script {
           //kubernetesDeploy(configs: "servidor-web-deploy-svc.yaml", kubeconfigId: 'kbconfig')
-          withKubeConfig([credentialsId: 'kbconfig']) {
+          withKubeCredentials([credentialsId: 'kube-credentials',serverUrl:'https://192.168.124.254']) {
             sh '''
                 if kubectl get deployments | grep servidor-web
                 then
