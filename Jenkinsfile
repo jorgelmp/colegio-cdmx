@@ -46,6 +46,7 @@ pipeline {
             sh '''
                 if ./kubectl get deployments | grep servidor-web
                 then
+                  ./kubectl apply -f servidor-web-deploy-svc.yaml
                   ./kubectl rollout restart deployment servidor-web
                 else
                   ./kubectl apply -f servidor-web-deploy-svc.yaml
