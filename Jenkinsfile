@@ -58,7 +58,7 @@ pipeline {
                   ./kubectl apply -f phpapp.yaml
                 else
                   ./kubectl apply -f phpapp.yaml
-                  ./kubectl rollout restart phpapp
+                  ./kubectl rollout restart deployment phpapp
                 fi
             '''
           }
