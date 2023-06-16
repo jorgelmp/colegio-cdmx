@@ -1,6 +1,6 @@
 <?php
 // Conexión a la base de datos MySQL
-$servername = "10.108.244.249" #"10.109.180.44"; //cluster ip del servicio de mysql
+$servername = "mysql-svc" # "10.108.244.249" #"10.109.180.44"; //cluster ip del servicio de mysql
 $username = "root";
 $password = "password";
 $port = 3306;

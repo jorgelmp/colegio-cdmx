@@ -1,32 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: servidor-web
+  name: phpapp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: servidor-web
+      app: php-app
   template:
     metadata:
       labels:
-        app: servidor-web
+        app: php-app
     spec:
       containers:
-        - name: colegio-cdmx-httpd
+        - name: php-app-container
           image: jorgelmp/colegio-cdmx:latest
-          ports:
-            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: servidor-web-service
+  name: phpapp-svc
 spec:
-  selector:
-    app: servidor-web
+  type: NodePort
   ports:
     - protocol: TCP
-      port: 80
+      port: 8088
       targetPort: 80
-  type: NodePort
+  selector:
+    app: php-app

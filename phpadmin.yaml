@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpadmin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpadmin
+  template:
+    metadata:
+      labels:
+        app: phpadmin
+    spec:
+      containers:
+        - name: phpadmin-pod
+          image: phpmyadmin
+          ports:
+            - containerPort: 80
+          env:
+            - name: PMA_HOST
+              value: mysql-svc
+            - name: PMA_PORT
+              value: "3306"
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpadmin-svc
+spec:
+  type: NodePort
+  ports:
+    - port: 8099
+      targetPort: 80
+  selector:
+    app: phpadmin
+

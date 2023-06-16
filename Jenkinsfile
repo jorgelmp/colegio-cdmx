@@ -39,17 +39,26 @@ pipeline {
     stage('Deploying container to Kubernetes') {
       steps{
         script {
-          //kubernetesDeploy(configs: "servidor-web-deploy-svc.yaml", kubeconfigId: 'kbconfig')
           withKubeCredentials(kubectlCredentials: [[credentialsId: 'kube-credentials',serverUrl: 'https://192.168.124.254:6443']]) {
             sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
             sh 'chmod u+x ./kubectl'
             sh '''
-                if ./kubectl get deployments | grep servidor-web
+                if ! ./kubectl get deployments | grep mysql
                 then
-                  ./kubectl apply -f servidor-web-deploy-svc.yaml
-                  ./kubectl rollout restart deployment servidor-web
+                  ./kubectl apply -f mysql.yaml
+                fi
+
+                if ! ./kubectl get deployments | grep phpadmin
+                then
+                  ./kubectl apply -f phpadmin.yaml
+                fi
+                
+                if ! ./kubectl get deployments | grep phpapp
+                then
+                  ./kubectl apply -f phpapp.yaml
                 else
-                  ./kubectl apply -f servidor-web-deploy-svc.yaml
+                  ./kubectl apply -f phpapp.yaml
+                  ./kubectl rollout restart phpapp
                 fi
             '''
           }
