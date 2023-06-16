@@ -1,2 +1,3 @@
-FROM httpd:2.4
-COPY src/ /usr/local/apache2/htdocs/
+FROM php:8.1-apache
+RUN apt-get update && docker-php-ext-install mysqli pdo && docker-php-ext-enable mysqli pdo
+COPY . /var/www/html/
